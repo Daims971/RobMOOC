@@ -1,86 +1,150 @@
-# Exercice 2. Les 3 bacs
+# Exercice 2 — Les 3 bacs
 
 ---
 
 ## 1) Équations d'état du système
 
-Les équations d'état du système sont les suivantes :
+Les équations d'état du système sont :
 
 $$
-\begin{cases}
-\dot{h}_1 = -x(h_1) - x(h_1 - h_2) + u_1 \\
-\dot{h}_2 = x(h_1 - h_2) - x(h_2 - h_3) \\
-\dot{h}_3 = -x(h_3) + x(h_2 - h_3) + u_2 \\
-y = \begin{pmatrix} y_1 \\ y_2 \end{pmatrix} = \begin{pmatrix} h_1 \\ h_2 \end{pmatrix}
-\end{cases}
+\dot{h}_1 = -h_1 - (h_1 - h_2) + u_1
 $$
 
-avec \( x = \begin{pmatrix} h_1 \\ h_2 \\ h_3 \end{pmatrix} \).
-
-On dérive la sortie \( y = \begin{pmatrix} y_1 \\ y_2 \end{pmatrix} \) jusqu'à obtenir la commande \( u = \begin{pmatrix} u_1 \\ u_2 \end{pmatrix} \).
-
-On a :
 $$
-y = \begin{pmatrix} y_1 \\ y_2 \end{pmatrix} = \begin{pmatrix} h_1 \\ h_2 \end{pmatrix} = \begin{pmatrix} -x(h_1) - x(h_1 - h_2) + u_1 \\ -x(h_2) + x(h_2 - h_3) + u_2 \end{pmatrix}
+\dot{h}_2 = (h_1 - h_2) - (h_2 - h_3)
 $$
+
+$$
+\dot{h}_3 = -h_3 + (h_2 - h_3) + u_2
+$$
+
+$$
+y =
+\begin{pmatrix}
+y_1 \\
+y_2
+\end{pmatrix}
+=
+\begin{pmatrix}
+h_1 \\
+h_2
+\end{pmatrix}
+$$
+
+avec :
+
+$$
+x =
+\begin{pmatrix}
+h_1 \\
+h_2 \\
+h_3
+\end{pmatrix}
+$$
+
+---
+
+On dérive la sortie :
+
+$$
+\dot{y} =
+\begin{pmatrix}
+\dot{h}_1 \\
+\dot{h}_2
+\end{pmatrix}
+$$
+
+$$
+=
+\begin{pmatrix}
+- h_1 - (h_1 - h_2) + u_1 \\
+- h_2 + (h_2 - h_3) + u_2
+\end{pmatrix}
+$$
+
+---
 
 On pose :
+
 $$
-b(x) = \begin{pmatrix} -x(h_1) - x(h_1 - h_2) \\ -x(h_2) + x(h_2 - h_3) \end{pmatrix}
-$$
-d'où :
-$$
-y = b(x) + u
+b(x) =
+\begin{pmatrix}
+- h_1 - (h_1 - h_2) \\
+- h_2 + (h_2 - h_3)
+\end{pmatrix}
 $$
 
+---
+
+D'où :
+
+$$
+\dot{y} = b(x) + u
+$$
+
+---
+
 On choisit :
+
 $$
-\boxed{u = v - b(x)}
+u = v - b(x)
 $$
+
 ce qui donne :
+
 $$
-y = v
+\dot{y} = v
 $$
-où \( v \) peut être choisi librement.
+
+où \( v \) est une nouvelle entrée libre.
 
 ---
 
 ## 2) Contrôle proportionnel intégral (PI)
 
-Un contrôle proportionnel intégral permet d'écrire la commande sous la forme :
+On choisit :
 
 $$
-v = x_0(w - y) + x_1 \int_0^t (w(z) - y(z)) \, dz + \dot{w}
+v = x_0 (w - y) + x_1 \int_0^t (w(z) - y(z)) \, dz + \dot{w}
 $$
 
-où :
-- \( w \) est la consigne,
-- \( x_0 \) et \( x_1 \) sont des coefficients déterminés par placement de pôles.
+avec :
 
-En appliquant cette commande, on obtient :
+- \( w \) la consigne  
+- \( x_0, x_1 \) des gains  
 
-$$
-y = b(x) + u \Leftrightarrow y = v \Leftrightarrow \ddot{e} + x_0 \dot{e} + x_1 e = 0
-$$
+---
 
-avec \( e = w - y \) l'erreur du système.
-
-Le polynôme caractéristique est :
+On pose :
 
 $$
-\Delta^2 + x_0 \Delta + x_1 = 0
+e = w - y
 $$
 
-Un placement de pôles en -1 donne :
+Alors :
 
 $$
-\Delta^2 + x_0 \Delta + x_1 = (\Delta + 1)^2 = \Delta^2 + 2\Delta + 1
+\ddot{e} + x_0 \dot{e} + x_1 e = 0
 $$
 
-On en déduit :
+---
+
+Polynôme caractéristique :
 
 $$
-x_0 = 2 \quad \text{et} \quad x_1 = 1
+\lambda^2 + x_0 \lambda + x_1 = 0
+$$
+
+Placement de pôles en -1 :
+
+$$
+(\lambda + 1)^2 = \lambda^2 + 2\lambda + 1
+$$
+
+Donc :
+
+$$
+x_0 = 2, \quad x_1 = 1
 $$
 
 ---
@@ -88,15 +152,17 @@ $$
 ## 3) Réécriture de la commande
 
 On pose :
+
 $$
 \tilde{y} = \int_0^t (w(z) - y(z)) \, dz
 $$
 
-On peut alors écrire la commande sous la forme :
+Alors :
 
 $$
-\begin{cases}
-\tilde{y} = w - y \\
+\dot{\tilde{y}} = w - y
+$$
+
+$$
 v = \tilde{y} + 2(w - y) + \dot{w}
-\end{cases}
 $$
