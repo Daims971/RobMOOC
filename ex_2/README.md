@@ -1,32 +1,47 @@
-
 # Exercice 2. Les 3 bacs
+
+---
 
 ## 1) Équations d'état du système
 
 Les équations d'état du système sont les suivantes :
 
 $$
-\left\{
-\begin{array}{l}
+\begin{cases}
 \dot{h}_1 = -x(h_1) - x(h_1 - h_2) + u_1 \\
 \dot{h}_2 = x(h_1 - h_2) - x(h_2 - h_3) \\
 \dot{h}_3 = -x(h_3) + x(h_2 - h_3) + u_2 \\
 y = \begin{pmatrix} y_1 \\ y_2 \end{pmatrix} = \begin{pmatrix} h_1 \\ h_2 \end{pmatrix}
-\end{array}
-\right.
+\end{cases}
 $$
 
 avec \( x = \begin{pmatrix} h_1 \\ h_2 \\ h_3 \end{pmatrix} \).
 
 On dérive la sortie \( y = \begin{pmatrix} y_1 \\ y_2 \end{pmatrix} \) jusqu'à obtenir la commande \( u = \begin{pmatrix} u_1 \\ u_2 \end{pmatrix} \).
 
+On a :
 $$
 y = \begin{pmatrix} y_1 \\ y_2 \end{pmatrix} = \begin{pmatrix} h_1 \\ h_2 \end{pmatrix} = \begin{pmatrix} -x(h_1) - x(h_1 - h_2) + u_1 \\ -x(h_2) + x(h_2 - h_3) + u_2 \end{pmatrix}
 $$
 
-On pose \( b(x) = \begin{pmatrix} -x(h_1) - x(h_1 - h_2) \\ -x(h_2) + x(h_2 - h_3) \end{pmatrix} \), d'où \( y = b(x) + u \).
+On pose :
+$$
+b(x) = \begin{pmatrix} -x(h_1) - x(h_1 - h_2) \\ -x(h_2) + x(h_2 - h_3) \end{pmatrix}
+$$
+d'où :
+$$
+y = b(x) + u
+$$
 
-On choisit \( \boxed{u = v - b(x)} \), ce qui donne \( y = v \), où \( v \) peut être choisi librement.
+On choisit :
+$$
+\boxed{u = v - b(x)}
+$$
+ce qui donne :
+$$
+y = v
+$$
+où \( v \) peut être choisi librement.
 
 ---
 
@@ -72,13 +87,16 @@ $$
 
 ## 3) Réécriture de la commande
 
-On pose \( \tilde{y} = \int_0^t (w(z) - y(z)) \, dz \). On peut alors écrire la commande sous la forme :
+On pose :
+$$
+\tilde{y} = \int_0^t (w(z) - y(z)) \, dz
+$$
+
+On peut alors écrire la commande sous la forme :
 
 $$
-\left\{
-\begin{array}{l}
+\begin{cases}
 \tilde{y} = w - y \\
 v = \tilde{y} + 2(w - y) + \dot{w}
-\end{array}
-\right.
+\end{cases}
 $$
